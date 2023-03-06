@@ -1,88 +1,87 @@
-<p>JOUEUR</p>
-
-    <div class="col-m-12">
-        <div class="col-sm-6">
-            <form >
-            <!-- tableau des Students existants -->
-            <table class="table table-success table-striped" border="2">
-                <thead>
-                    <tr>
-                        <th>ID</th><th>Prenom</th><th>Nom</th><th>Date de Naissance</th><th>Nationalite</th>
-                        <th>Sexe</th>
-                    </tr>
-                  </thead>
-                <tbody>
-                    <tr *ngFor="let j of joueurList" (click)="onSelect(j)" 
-                        [class.selected]="j==selectedJoueur"> 
-                        <td  scope="col">{{j.id}}</td>
-                        <td  scope="col">{{j.prenom}}</td>
-                        <td  scope="col">{{j.nom}}</td>
-                        <td  scope="col">{{j.dateNaissance}}</td>
-                        <td  scope="col">{{j.nationalite.nomFrFr}}</td>
-                        <td  scope="col">{{textSexe(j.sexe)}}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </form>
-   </div>
- <div class="col-m-6">
-          <!-- formulaire de mise à jour d'un Student selectionné  -->
-          <form >
-            <label class="text">ID:</label><label>{{joueur.id}}</label><br/>
-            <div class="row g-3 align-items-center">
-                <div class="col-auto">
-                    <label class="text">Prenom:</label><input [(ngModel)]="joueur.prenom" name="prenom" 
-                    required class="form-control" required name="prenom"/><br/>
-                </div>
+<h2>Joueurs</h2>
+<div class="row">
+    <div class="col-sm-6">
+        <!-- tableau des joueurs existants -->
+        <table class="table table-success table-striped" border="2">
+            <thead>
+                <tr>
+                    <th>ID</th><th>Prenom</th><th>Nom</th><th>DateNaissance</th>
+                    <th>Nationalite</th><th>Sexe</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let j of joueurList" (click)="onSelect(j)"
+                [class.selected]="j==selectedJoueur">
+                <td>{{j.id}}</td>
+                <td>{{j.prenom}}</td>
+                <td>{{j.nom}}</td>
+                <td>{{j.dateNaissance}}</td>
+                <td >{{j.nationalite.nomFrFr}}</td>
+                <td >{{textSexe(j.sexe)}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-sm-6">
+        <!-- formulaire de mise à jour d'un joueur selectionné  -->
+      <form #myForm="ngForm">
+        <div class="row mt-1">
+            <label class="col-sm-4 text-sm-end text">ID:</label>
+            <!-- <label class="col-sm-8">{{joueur.id}}</label> -->
+            <div class="col-auto">
+                <input [value]="joueur.id" disabled="true" name="prenom" 
+                        required class="form-control"/>
             </div>
-
-            <div class="row g-3 align-items-center">
-                <div class="col-auto">            
-                    <label class="text">Nom:</label><input [(ngModel)]="joueur.nom" name="nom" 
-                    required class="form-control" required name="nom"/><br/>
-                </div>
+        </div>
+        <div class="row mt-1 mb-1">    
+            <label class="col-sm-4 text-sm-end text">Prenom:</label>
+            <div class="col-auto">
+                <input [(ngModel)]="joueur.prenom" name="prenom" 
+                        required class="form-control"/>
             </div>
-
-            <div class="row g-3 align-items-center">
-                <div class="col-auto">
-                    <label class="text">Date de naissance:</label><input type="text" [(ngModel)]="joueur.dateNaissance"  name="dateNaissance"
-                    required class="form-control" required name="dateNaissance"/><br/>
-                </div>
+        </div>
+        <div class="row mt-1 mb-1">
+            <label class="col-sm-4 text-sm-end text">Nom:</label>
+            <div class="col-auto">
+                 <input [(ngModel)]="joueur.nom" name="nom" 
+                        required class="form-control"/>
             </div>
-            
-            <div class="row g-3 align-items-center">
-                <div class="col-auto form-group row">
-                    <label for="emailpetit" class="col-auto col-form-label col-form-label-sm text">Nationalite:</label>
-                    <select [(ngModel)]="joueur.nationalite.id" name="listePays" 
-                        required class="form-control" required name="nationalite">
-                        <option [ngValue]="p.id" *ngFor="let p of listePays">{{p.nomFrFr}}</option>
-                    </select><br/>
-                </div>
+        </div>
+        <div class="row mt-1 mb-1">
+            <label class="col-sm-4 text-sm-end text">DateNaissance:</label>
+            <div class="col-auto">
+              <!--  <input [(ngModel)]="joueur.dateNaissance" name="dateNaissance" 
+                       required pattern="^[0-9]{4}-[0-9]{2}-[0-9]{2}" class="form-control"/> -->
+                <input type="date" [(ngModel)]="joueur.dateNaissance" name="dateNaissance" 
+                       required  class="form-control"/>
             </div>
-           
-
-            
-
-             <!--label>nationalite:</label><input [(ngModel)]="joueur.nationalite.nomFrFr" name="nationalite" 
-                  required class="form-control" required name="nationalite"/><br/>-->
-
-             <!--label>sexe:</label><input [(ngModel)]="joueur.sexe" name="sexe" 
-                  required class="form-control" required name="sexe"/><br/>-->
+        </div>
+        <div class="row mt-1 mb-1">
+            <label class="col-sm-4 text-sm-end text">Nationalite:</label>
+            <div class="col-auto">
+                <select [(ngModel)]="joueur.nationalite.id" name="listePays" 
+                    required class="form-control" required name="nationalite">
+                    <option [ngValue]="p.id" *ngFor="let p of listePays">{{p.nomFrFr}}</option>
+                </select><br/>
+            </div>
+        </div>
+       
             <div class="form-check form-check-inline text">
                 <input [(ngModel)]="joueur.sexe" class="form-check-input" type="radio" name="sexe" [value]="0">
-                <label class="form-check-label" for="sexe">Homme</label>
+                <label class="form-check-label text" for="sexe">Homme</label>
             </div>
             <div class="form-check form-check-inline text">
-                <input [(ngModel)]="joueur.sexe" class="form-check-input" type="radio" name="sexe" [value]="1">
-                <label class="form-check-label" for="sexe">Femme</label>
+                <input [(ngModel)]="joueur.sexe" class="form-check-input" type="radio" name="sexe" [value]="1"> 
+                <label class="form-check-label text" for="sexe">Femme</label>
             </div>
-                  <br/><br/>
-            <button type="button" class="btn btn-info" (click)="onUpdate()" [disabled]="selectedJoueur==null ">Mettre à jour</button> &nbsp; 
-            <button type="button" class="btn btn-success" (click)="onNew()">Nouveau</button> &nbsp; 
-            <button type="button" class="btn btn-primary" (click)="onAdd()" [disabled]="selectedJoueur!=null">Ajouter</button> &nbsp; 
-            <button type="button" class="btn btn-danger" (click)="onDelete()" [disabled]="selectedJoueur==null">Effacer</button>
-
-         </form>
+       
+        <br/><br/>
+        <button type="button" class="btn btn-info "  (click)="onUpdate()" [disabled]="selectedJoueur==null || !myForm.form.valid">Mettre à jour</button> &nbsp; 
+        <button type="button" class="btn btn-success " (click)="onNew()">Nouveau</button> &nbsp; 
+        <button  type="button" class="btn btn-primary" (click)="onAdd()" [disabled]="selectedJoueur!=null || !myForm.form.valid">Ajouter un Joueur</button> &nbsp; 
+        <button type="button" class="btn btn-danger"  (click)="onDelete()" [disabled]="selectedJoueur==null">Suprimer</button>
+     </form>
+     <hr/>
+    
+    </div>
 </div>
-     
-   </div>
