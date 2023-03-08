@@ -4,7 +4,6 @@ import { StudentService } from '../common/Service/student.service';
 import { firstValueFrom } from 'rxjs';
 import { messageFromError } from '../common/util/util';
 
-
 @Component({
   selector: 'app-student',
   templateUrl: './student.component.html',
